@@ -1,0 +1,381 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlyBase Menu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 1em 0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1em;
+        }
+
+        #logo {
+            height: 40px;
+        }
+
+        .menu {
+            list-style: none;
+            display: flex;
+            gap: 1em;
+            margin: 0;
+            padding: 0;
+        }
+
+            .menu > li {
+                position: relative;
+            }
+
+            .menu a {
+                color: white;
+                text-decoration: none;
+                padding: 0.5em 1em;
+                display: block;
+            }
+
+                .menu a:hover {
+                    background-color: #575757;
+                    border-radius: 4px;
+                }
+
+        .submenu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #333;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            border-radius: 4px;
+            z-index: 1000;
+        }
+
+            .submenu a {
+                white-space: nowrap;
+            }
+
+        .menu > li:hover .submenu {
+            display: block;
+        }
+
+        .submenu .submenu {
+            top: 0;
+            left: 100%;
+            margin-left: 1px;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 2em auto;
+            padding: 1em;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+        }
+
+        label {
+           
+            font-weight: bold;
+            color: #333;
+        }
+
+        input[type="text"], input[type="file"], textarea, select {
+            padding: 0.5em;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+
+        textarea {
+            float: right;
+            resize: vertical;
+        }
+
+        button {
+            padding: 0.5em 1em;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+            button:hover {
+                background-color: #575757;
+            }
+
+        #species {
+            margin-top: 2em;
+        }
+
+        .species-row {
+            display: flex;
+            gap: 1em;
+        }
+
+        .species-column {
+            flex: 1;
+        }
+
+        .species-group {
+            margin-bottom: 1em;
+        }
+
+        .subgroup {
+            margin-left: 1em;
+        }
+
+        section#blast {
+            border: 1px solid #ccc;
+            padding: 20px;
+            width: 1000px;
+            margin: 20px auto;
+            background-color: #f9f9f9;
+        }
+
+            section#blast h1 {
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+
+            section#blast form {
+                display: flex;
+                flex-direction: column;
+            }
+
+            section#blast label {
+                margin-bottom: 5px;
+                font-weight: bold;
+            }
+
+            section#blast select, section#blast input[type="file"], section#blast textarea, section#blast button {
+                margin-bottom: 20px;
+                padding: 10px;
+                font-size: 16px;
+            }
+
+            section#blast textarea {
+                resize: none;
+            }
+
+            section#blast button {
+                background-color: #ccc;
+                border: 1px solid #aaa;
+                cursor: pointer;
+            }
+
+                section#blast button#clear_sequence {
+                    background-color: #f2f2f2;
+                    color: #000;
+                }
+
+                section#blast button[type="submit"] {
+                    background-color: #666;
+                    color: #fff;
+                }
+
+        section#species {
+            border: 1px solid #ccc;
+            padding: 20px;
+            width: 1000px;
+            margin: 20px auto;
+            background-color: #f9f9f9;
+        }
+
+            section#species h2 {
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+
+        .species-row {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .species-column {
+            flex: 1;
+            margin-right: 20px;
+        }
+
+            .species-column:last-child {
+                margin-right: 0;
+            }
+
+        .species-group {
+            margin-bottom: 20px;
+        }
+
+            .species-group label, .subgroup label {
+                margin-left: 5px;
+            }
+
+        .subgroup {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+	    <nav>
+			<img src="logo.png" alt="FlyBase" id="logo">
+			<ul class="menu">
+				<li><a href="#">Tools</a></li>
+				<li><a href="#">Downloads</a></li>
+				<li><a href="#">Links</a>
+					<ul class="submenu">
+						<li><a href="#">External Resources</a></li>
+						<li><a href="#">Model Organisms (MODs)</a></li>
+						<li><a href="#" class="has-submenu">Stock Collections</a>
+							<ul class="submenu">
+								<li><a href="#">Bloomington Drosophila Stock Center (BDSC)</a></li>
+								<li><a href="#">FlyORF</a></li>
+								<li><a href="#">Korea Drosophila Resource Center (KDRC)</a></li>
+								<li><a href="#">Kyoto Stock Center</a></li>
+								<li><a href="#">NIG-FLY</a></li>
+								<li><a href="#">Tsinghua Fly Center (THFC)</a></li>
+								<li><a href="#">Vienna Drosophila Resource Center (VDRC)</a></li>
+							</ul>
+						</li>
+						<li><a href="#">BDGP</a></li>
+						<li><a href="#">DGRC</a></li>
+						<li><a href="#">DRSC/TRiP</a></li>
+						<li><a href="#">DIS by issue</a></li>
+						<li><a href="#">FlyBook</a></li>
+						<li><a href="#">FlyExpress</a></li>
+						<li><a href="#">Interactive Fly</a></li>
+						<li><a href="#">Virtual Fly Brain</a></li>
+						<li><a href="#">FlyCyc</a></li>
+					</ul>
+				</li>
+				<li><a href="#">Community</a></li>
+				<li><a href="#">Species</a></li>
+				<li><a href="#">About</a></li>
+				<li><a href="#">Help</a></li>
+				<li>
+					<input type="text" placeholder="Jump to Gene">
+					<button>Go</button>
+				</li>
+			</ul>
+		</nav>
+    </header>
+    <main>
+        <section id="blast">
+            <h1>BLAST</h1>
+            <form>
+                <label for="database">Database</label>
+                <select id="database" name="database">
+                    <option value="genome_assembly">Genome Assembly (NT)</option>
+                </select>
+                <label for="program">Program</label>
+                <select id="program" name="program">
+                    <option value="blastn">blastn: NT -> NT</option>
+                </select>
+                <label for="sequence_file">Sequence file</label>
+                <input type="file" id="sequence_file" name="sequence_file">
+                <label for="sequence">Sequence</label>
+                <textarea id="sequence" name="sequence" rows="6"></textarea>
+                <button type="button" id="clear_sequence">Clear sequence</button>
+                <button type="submit">BLAST</button>
+            </form>
+        </section>
+
+        <section id="species">
+            <h2>Species (optional)</h2>
+            <form>
+                <div class="species-row">
+					<div class="species-column">
+					</div>
+                    <div class="species-column">
+                        <div class="species-group">
+                            <input type="checkbox" id="all" name="all">
+                            <label for="all">All</label>
+                        </div>
+                        <div class="species-group">
+                            <input type="checkbox" id="diptera" name="diptera">
+                            <label for="diptera">Diptera</label>
+                            <div class="subgroup">
+                                <input type="checkbox" id="drosophila_genus" name="drosophila_genus">
+                                <label for="drosophila_genus">Drosophila (genus)</label>
+                                <div class="subgroup">
+                                    <input type="checkbox" id="drosophila_melanogaster" name="drosophila_melanogaster">
+                                    <label for="drosophila_melanogaster">Drosophila melanogaster</label>
+                                    <input type="checkbox" id="drosophila_simulans" name="drosophila_simulans">
+                                    <label for="drosophila_simulans">Drosophila simulans</label>
+                                    <input type="checkbox" id="drosophila_sechellia" name="drosophila_sechellia">
+                                    <label for="drosophila_sechellia">Drosophila sechellia</label>
+                                    <input type="checkbox" id="drosophila_yakuba" name="drosophila_yakuba">
+                                    <label for="drosophila_yakuba">Drosophila yakuba</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="species-column">
+                        <div class="species-group">
+                            <input type="checkbox" id="lepidoptera" name="lepidoptera">
+                            <label for="lepidoptera">Lepidoptera</label>
+                            <div class="subgroup">
+                                <input type="checkbox" id="bombyx_mori" name="bombyx_mori">
+                                <label for="bombyx_mori">Bombyx mori (silkworm)</label>
+                                <input type="checkbox" id="danaus_plexippus" name="danaus_plexippus">
+                                <label for="danaus_plexippus">Danaus plexippus (Monarch butterfly)</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="species-column">
+                        <div class="species-group">
+                            <input type="checkbox" id="coleoptera" name="coleoptera">
+                            <label for="coleoptera">Coleoptera</label>
+                            <div class="subgroup">
+                                <input type="checkbox" id="tribolium_castaneum" name="tribolium_castaneum">
+                                <label for="tribolium_castaneum">Tribolium castaneum (Red flour beetle)</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="species-column">
+                        <div class="species-group">
+                            <input type="checkbox" id="hymenoptera" name="hymenoptera">
+                            <label for="hymenoptera">Hymenoptera</label>
+                            <div class="subgroup">
+                                <input type="checkbox" id="nasonia_giraulti" name="nasonia_giraulti">
+                                <label for="nasonia_giraulti">Nasonia giraulti (Parasitic wasp)</label>
+                            </div>
+                        </div>
+                    </div>
+		
+                </div>
+            </form>
+        </section>
+    </main>
+</body>
+</html>
